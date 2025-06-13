@@ -1,9 +1,47 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+require "faker"
+require "open-uri"
+
+
+puts "🔄 Nettoyage des données..."
+Gossip.delete_all
+User.delete_all
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='users'")
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='gossips'")
+
+avatar_path = Rails.root.join('db', 'seeds', "assets", 'avatar.png')
+
+puts "👤 Ajout des utilisateurs"
+User.create!(pseudo: "rosa", email: "test@test.com", bio: Faker::Lorem.paragraph(sentence_count: 5), password: "password", password_confirmation: "password")
+10.times do
+  password = "password"
+  user=User.create!(
+    pseudo: Faker::FunnyName.name,
+    email: Faker::Internet.unique.email,
+    bio: Faker::Lorem.paragraph(sentence_count: 5),
+    password: password,
+    password_confirmation: password
+  )
+  user.avatar.attach(
+    io: File.open(avatar_path),
+    filename: "avatar.png",
+    content_type: "image/png"
+  )
+end
+
+puts "🔤 Contenu ajouté"
+10.times do
+  url = "https://picsum.photos/200"
+  file = URI.open(url)
+  gossip = Gossip.create!(
+    title: Faker::Lorem.sentence(word_count: 3),
+    content: Faker::Lorem.paragraph(sentence_count: 4),
+    user: User.all.sample
+  )
+  gossip.media.attach(
+    io: file,
+    filename: "image.jpg",
+    content_type: "image/jpeg"
+  )
+end
+
+puts "✅ Seeds terminés !"

@@ -1,0 +1,19 @@
+<%= form_with model: @gossip, url: gossips_path, local: true do |form| %>
+<div class="mt-5 ms-5 me-5">
+    <div class="mb-3">
+    <%= form.label :title, "Titre" %>
+    <%= form.text_field :title, class: "form-control"%>
+</div>
+<div class="mb-3">
+    <%= form.label :content, "Contenu" %>
+    <%= form.text_area :content, class: "form-control" %>
+</div>
+  <div class="mb-3">
+    <%= label_tag :pseudo, "Pseudo" %>
+    <%= text_field_tag :pseudo, params[:pseudo], class: "form-control" %>
+  </div>
+<%= form.submit "Créer Gossip", class: "btn btn-primary" %>
+</div>
+
+<% end %>
+

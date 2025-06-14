@@ -7,7 +7,5 @@ def team_data
 end
 
 def home
-  def home
-  end
 end
 end

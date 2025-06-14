@@ -1,8 +1,8 @@
 <div class="container">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-start align-items-center mb-4" style="gap: 10px;">
         <h2 class="mb-0">Tous les Gossips</h2>
-        <%= link_to "Créer un nouveau gossip", new_gossip_path, class: "btn btn-primary" %>
+        <%= link_to "Créer un nouveau gossip", new_gossip_path, class: "btn btn-primary mt-2" %>
     </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       <% @gossips.each do |gossip| %>
@@ -12,6 +12,7 @@
                     <h5 class="card-title text-primary"><%= gossip.title %></h5>
                     <p class="card-text"><%= truncate(gossip.content, length: 120, separator: ' ') %></p>
                     <hr>
+                    <%= link_to "Lire plus", gossip_path(gossip), class: "btn btn-outline-primary mt-2" %>
                 </div>
             </div>
       </div>

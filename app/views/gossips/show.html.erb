@@ -1,0 +1,34 @@
+<div class="card mb-5 shadow-sm">
+    <div class="row g-0">
+        <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
+            <%= image_tag 'placeholder_avatar.png',
+              alt: @gossip.user&.pseudo || "Auteur inconnu",
+              class: "img-fluid rounded-circle border border-2 border-primary",
+              style: "max-width: 150px;" %>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h2 class="card-title text-primary mb-3"><%= @gossip.title %></h2>
+                <div class="speech-bubble bg-light p-4 mb-3">
+                    <%= simple_format(@gossip.content) %>
+                </div>
+                <p class="text-muted small mb-3">
+                  Par <strong><%= @gossip.user&.pseudo || "Auteur inconnu" %></strong>
+                  <br>
+                  <%= l(@gossip.created_at, format: :long) %>
+                </p>
+                <div class="d-flex justify-content-start align-items-center mb-4" style="gap: 10px;">
+                  <%= link_to "✏️ Modifier ce Gossip", edit_gossip_path(@gossip), class: "btn btn-warning" %>
+                  <%= link_to "🗑️ Supprimer", gossip_path(@gossip),
+                      method: :delete,
+                      data: { confirm: "Es-tu sûr de vouloir supprimer ce gossip ?" },
+                      class: "btn btn-danger" %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="d-flex justify-content-around align-items-center mb-4" style="gap: 10px;">
+          <%= link_to "← Retour à la liste", gossips_path, class: "btn btn-outline-secondary" %>
+          <%= link_to "📝 Créer un nouveau gossip", new_gossip_path, class: "btn btn-primary " %>
+        </div>

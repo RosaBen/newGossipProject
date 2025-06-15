@@ -14,4 +14,10 @@ class SessionsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    logout
+    flash[:success] = "Vous avez été déconnecté."
+    redirect_to root_path
+  end
 end

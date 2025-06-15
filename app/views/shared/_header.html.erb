@@ -10,7 +10,7 @@
 
                         <% if logged_in? %> 
                         <li class="nav-item">
-                            <%= link_to "Se déconnecter",
+                            <%= button_to "Se déconnecter",
                             logout_path, 
         method: :delete, data: { confirm: "Es-tu sûr(e) ?" }, 
         class: "btn btn-outline-danger" %>

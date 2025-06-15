@@ -1,5 +1,9 @@
-<%= form_with url: sessions_path, method: :post, local: true do |form| %>
+<div class="d-flex justify-content-center mt-5">
+  <div class="w-100" style="max-width: 33%;">
+    <div class="border border-primary rounded-4 shadow p-4 bg-white">
+      <%= form_with url: sessions_path, method: :post, local: true do |form| %>
   <div class="mb-3">
+    <h3 class="text-center text-primary mb-4">🔐 Connexion</h3>
     <%= form.label :email_or_pseudo, "Email ou Pseudo" %>
     <%= form.text_field :email_or_pseudo, placeholder: "Entrez votre email ou pseudo", class: "form-control" %>
   </div>
@@ -8,6 +12,10 @@
     <%= form.label :password, "Mot de passe" %>
     <%= form.password_field :password, placeholder: "Entrez votre mot de passe", class: "form-control" %>
   </div>
-
-  <%= form.submit "Se connecter", class: "btn btn-primary" %>
+<div class="d-grid">
+  <%= form.submit " 🚪Se connecter", class: "btn btn-primary" %>
+  </div>
 <% end %>
+    </div>
+  </div>
+</div>

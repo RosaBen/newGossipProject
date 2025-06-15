@@ -29,6 +29,6 @@ class UsersController < ApplicationController
     # puts "PARAMS ----------"
     # puts params.inspect
     # puts "-----------------"
-    params.require(:user).permit(:pseudo, :email, :password, :password_confirmation, :bio)
+    params.require(:user).permit(:pseudo, :email, :password, :password_confirmation, :bio, :city_id)
   end
 end

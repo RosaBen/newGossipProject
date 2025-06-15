@@ -10,11 +10,7 @@
       <%= form.label :content, "Contenu" %>
       <%= form.text_area :content, class: "form-control" %>
     </div>
-    
-    <div class="mb-3">
-      <%= label_tag :pseudo, "Pseudo" %>
-      <%= text_field_tag :pseudo, @gossip.user&.pseudo, class: "form-control", disabled: @gossip.new_record? %>
-    </div>
+      <%= hidden_field_tag :pseudo, @gossip.user&.pseudo %>
     
     <%= form.submit @gossip.new_record? ? "Créer Gossip" : "Modifier Gossip", class: "btn btn-primary" %>
     

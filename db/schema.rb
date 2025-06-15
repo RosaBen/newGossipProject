@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_13_214421) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_15_212533) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_13_214421) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "cities", force: :cascade do |t|
+    t.string "city_name"
+    t.string "zip_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_name", "zip_code"], name: "index_cities_on_city_name_and_zip_code", unique: true
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content", limit: 400
+    t.integer "user_id", null: false
+    t.integer "gossip_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gossip_id"], name: "index_comments_on_gossip_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "gossips", force: :cascade do |t|
     t.string "title", null: false
     t.text "content", null: false
@@ -49,16 +67,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_13_214421) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "pseudo"
-    t.string "email"
+    t.string "pseudo", null: false
+    t.string "email", null: false
     t.string "password_digest", null: false
-    t.text "bio", null: false
+    t.text "bio"
+    t.integer "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["email", "pseudo"], name: "index_users_on_email_and_pseudo", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "gossips"
+  add_foreign_key "comments", "users"
   add_foreign_key "gossips", "users"
 end

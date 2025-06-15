@@ -8,29 +8,29 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
 
-                        <%# <% if user_signed_in? %> 
+                        <% if logged_in? %> 
                         <li class="nav-item">
-                            <%= link_to "Se déconnecter",
-                            # destroy_user_session_path, 
-        # method: :delete, data: { confirm: "Es-tu sûr(e) ?" }, 
+                            <%= button_to "Se déconnecter",
+                            logout_path, 
+        method: :delete, data: { confirm: "Es-tu sûr(e) ?" }, 
         class: "btn btn-outline-danger" %>
                         </li>
 
                         <li class="nav-item"><%= link_to "Liste des Gossips", 
                         gossips_path, 
                         class: "nav-link text-white" %></li>
-                        <%# <% else %>
+                        <% else %>
                         <li class="nav-item">
                             <%= link_to "Se connecter", 
-                            # new_user_session_path,
+                            login_path,
                              class: "nav-link text-white" %>
                         </li>
                         <li class="nav-item">
                             <%= link_to "S'inscrire", 
-                            # new_user_registration_path, 
+                            signup_path, 
                             class: "nav-link text-white" %>
                         </li>
-                        <%# <% end %>
+                        <% end %>
                         <li class="nav-item"><%= link_to "Accueil", root_path, class: "nav-link text-white" %></li>
                         <li class="nav-item"><%= link_to "Contact", contact_path, class: "nav-link text-white"%>
 

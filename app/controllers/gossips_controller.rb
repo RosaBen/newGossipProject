@@ -26,6 +26,20 @@ class GossipsController < ApplicationController
     end
   end
 
+  def edit
+    @gossip = Gossip.find(params[:id])
+  end
+  def update
+    @gossip = Gossip.find(params[:id])
+    if @gossip.update(gossip_params)
+      flash[:notice] = "✅ Gossip bien modifié !"
+      redirect_to gossip_path(@gossip)
+    else
+      flash.now[:alert] = "❌ Remplis bien tous les champs."
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
   # puts "PARAMS ----------"
   # puts params.inspect

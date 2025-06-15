@@ -21,15 +21,14 @@
     💡 Cliquez sur un post-it pour le lire. Utilisez ↑ ↓ pour naviguer entre eux.
   </button>
 <div class="container my-4">
-  <div class="d-flex flex-wrap justify-content-center align-items-start gap-4">
-
-    <div class="flex-shrink-0">
+  <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+        <div class="order-1 order-md-2 position-relative" style="width: 200px; min-height: 400px;">
+      <%= render_gossips_post_it %>
+    </div>
+    <div class="order-2 order-md-1">
       <img src="https://picsum.photos/300" alt="Image gauche" class="img-fluid rounded shadow" >
     </div>
-    <div class="position-relative" style="width: 200px; min-height: 400px;">
-      <%= render_post_its %>
-    </div>
-    <div class="flex-shrink-0">
+    <div class="order-3 d-none d-md-block">
       <img src="https://picsum.photos/id/237/300" alt="Image droite" class="img-fluid rounded shadow">
     </div>
 

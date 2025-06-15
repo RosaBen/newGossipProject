@@ -12,7 +12,8 @@
     <%= label_tag :pseudo, "Pseudo" %>
     <%= text_field_tag :pseudo, params[:pseudo], class: "form-control" %>
   </div>
-<%= form.submit "Créer Gossip", class: "btn btn-primary" %>
+<%= form.submit @gossip.new_record? ? "Créer Gossip" : "Modifier Gossip", class: "btn btn-primary" %>
+
 </div>
 
 <% end %>

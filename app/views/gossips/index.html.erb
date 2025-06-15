@@ -1,0 +1,10 @@
+<div class="container my-5">
+
+    <div class="d-flex justify-content-between mb-4" style="gap: 10px;">
+        <h2 class="text-primary mb-4">Tous les Gossips 📃</h2>
+        <div><%= link_to "Créer un nouveau gossip", new_gossip_path, class: "btn btn-primary mt-2" %></div>
+    </div>
+    <div>
+        <%= render 'shared/gossips_list' %>
+    </div>
+</div>

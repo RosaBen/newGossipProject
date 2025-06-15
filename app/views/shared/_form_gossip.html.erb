@@ -8,10 +8,12 @@
     <%= form.label :content, "Contenu" %>
     <%= form.text_area :content, class: "form-control" %>
 </div>
+<% if @gossip.persisted? %>
   <div class="mb-3">
     <%= label_tag :pseudo, "Pseudo" %>
     <%= text_field_tag :pseudo, @gossip.user&.pseudo, class: "form-control", disabled: true %>
   </div>
+  <% end %>
 <%= form.submit @gossip.new_record? ? "Créer Gossip" : "Modifier Gossip", class: "btn btn-primary" %>
 
 </div>

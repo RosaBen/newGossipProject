@@ -40,6 +40,17 @@ class GossipsController < ApplicationController
     end
   end
 
+  def destroy
+    @gossip = Gossip.find(params[:id])
+    if @gossip.destroy
+      flash[:notice] = "✅ Gossip bien supprimé !"
+      redirect_to gossips_path
+    else
+      flash[:alert] = "❌ Une erreur est survenue lors de la suppression du gossip."
+      redirect_to gossip_path(@gossip), status: :unprocessable_entity
+    end
+  end
+
   private
   # puts "PARAMS ----------"
   # puts params.inspect

@@ -17,6 +17,7 @@
                   <br>
                   <%= l(@gossip.created_at, format: :long) %>
                 </p>
+                <% if current_user == @gossip.user %>
                 <div class="d-flex justify-content-start align-items-center mb-4" style="gap: 10px;">
                   <%= link_to "✏️ Modifier ce Gossip", edit_gossip_path(@gossip), class: "btn btn-warning" %>
                   <%# Avec Turbo & Importmap, le plus simple et robuste c’est d’utiliser button_to pour les actions DELETE : %>
@@ -25,6 +26,7 @@
                       form: { data: { turbo_confirm: "Es-tu sûr de vouloir supprimer ce gossip ?" } },
                       class: "btn btn-danger" %>
                 </div>
+                <% end %>
             </div>
         </div>
     </div>

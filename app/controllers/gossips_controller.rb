@@ -1,7 +1,7 @@
 class GossipsController < ApplicationController
   # puts "PARAMS ----------"
   # puts params.inspect
-  # puts "
+  # puts ""
   def index
     @gossips = Gossip.includes(:user).order(created_at: :desc)
   end
@@ -14,9 +14,11 @@ class GossipsController < ApplicationController
     @gossip = Gossip.new
   end
   def create
+    # puts "&&&&&&&&&&&&&&&&&&&&"
+    # puts "PARAMS: #{params.inspect}"
+    # puts "&&&&&&&&&&&&&&&&&&&&"
     @gossip = Gossip.new(gossip_params)
-    user_id = User.find_userid_by_pseudo(params[:pseudo])
-    @gossip.user_id = user_id
+    @gossip.user = current_user
     if @gossip.save
       flash[:notice] = "✅ Gossip bien créé !"
       redirect_to gossip_path(@gossip)

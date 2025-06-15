@@ -1,0 +1,13 @@
+<%= form_with url: sessions_path, method: :post, local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :email_or_pseudo, "Email ou Pseudo" %>
+    <%= form.text_field :email_or_pseudo, placeholder: "Entrez votre email ou pseudo", class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :password, "Mot de passe" %>
+    <%= form.password_field :password, placeholder: "Entrez votre mot de passe", class: "form-control" %>
+  </div>
+
+  <%= form.submit "Se connecter", class: "btn btn-primary" %>
+<% end %>

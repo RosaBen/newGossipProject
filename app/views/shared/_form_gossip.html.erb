@@ -1,22 +1,22 @@
 <%= form_with model: @gossip, local: true do |form| %>
-<div class="mt-5 ms-5 me-5">
+  <div class="mt-5 ms-5 me-5">
+    
     <div class="mb-3">
-    <%= form.label :title, "Titre" %>
-    <%= form.text_field :title, class: "form-control"%>
-</div>
-<div class="mb-3">
-    <%= form.label :content, "Contenu" %>
-    <%= form.text_area :content, class: "form-control" %>
-</div>
-<% if @gossip.persisted? %>
-  <div class="mb-3">
-    <%= label_tag :pseudo, "Pseudo" %>
-    <%= text_field_tag :pseudo, @gossip.user&.pseudo, class: "form-control", disabled: true %>
+      <%= form.label :title, "Titre" %>
+      <%= form.text_field :title, class: "form-control" %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :content, "Contenu" %>
+      <%= form.text_area :content, class: "form-control" %>
+    </div>
+    
+    <div class="mb-3">
+      <%= label_tag :pseudo, "Pseudo" %>
+      <%= text_field_tag :pseudo, @gossip.user&.pseudo, class: "form-control", disabled: @gossip.new_record? %>
+    </div>
+    
+    <%= form.submit @gossip.new_record? ? "Créer Gossip" : "Modifier Gossip", class: "btn btn-primary" %>
+    
   </div>
-  <% end %>
-<%= form.submit @gossip.new_record? ? "Créer Gossip" : "Modifier Gossip", class: "btn btn-primary" %>
-
-</div>
-
 <% end %>
-

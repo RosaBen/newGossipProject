@@ -3,7 +3,7 @@ class GossipsController < ApplicationController
   # puts params.inspect
   # puts "
   def index
-    @gossips = Gossip.order(created_at: :desc)
+    @gossips = Gossip.includes(:user).order(created_at: :desc)
   end
 
   def show

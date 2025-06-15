@@ -1,0 +1,21 @@
+<div>
+  <% @gossips.each do |gossip| %>
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title text-dark">
+          <%=gossip.title%>
+            </h5>
+            <p class="card-text"><%= truncate(gossip.content, length: 120, separator: ' ') %></p>
+            <hr>
+            <p class="text-muted mb-1">
+          🧑 Par <strong><%= gossip.user.pseudo %></strong>
+            </p>
+            <p class="text-muted">
+          🕒 Créé le : <%= l(gossip.created_at, format: :short) %>
+            </p>
+            <%= link_to "Lire plus", gossip_path(gossip), class: "btn btn-outline-primary mt-2" %>
+        </div>
+    </div>
+  <% end %>
+
+</div>

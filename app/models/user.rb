@@ -10,7 +10,10 @@ before_save :email_downcase
   format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: "Entrez une adresse email valide" }
   validates :password, length: { minimum: 6 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { new_record? || !password.nil? }
+  validates :pseudo, presence: true, uniqueness: { case_sensitive: false }, length: { minimum: 3, maximum: 20 }
+  validates :bio, length: { maximum: 500 }, allow_blank: true
 
+  # Callbacks to downcase pseudo and email before saving
   def pseudo_downcase
     self.pseudo = pseudo.downcase if pseudo.present?
   end
@@ -22,24 +25,4 @@ before_save :email_downcase
     user = User.find_by("LOWER(pseudo) = ?", pseudo.downcase)
     user&.id
   end
-  # def self.find_userid_by_email(email)
-  #   user = User.find_by("LOWER(email) = ?", email.downcase)
-  #   user&.id
-  # end
-
-  # def self.find_user_by_pseudo(pseudo)
-  #   User.find_by("LOWER(pseudo) = ?", pseudo.downcase)
-  # end
-
-  # def self.find_user_by_email(email)
-  #   User.find_by("LOWER(email) = ?", email.downcase)
-  # end
-  # def self.find_user_by_id(id)
-  #   User.find_by(id: id)
-  # end
-
-  # def self.find_user_by_pseudo_or_email(pseudo_or_email)
-  #   user = User.find_by("LOWER(pseudo) = ? OR LOWER(email) = ?", pseudo_or_email.downcase, pseudo_or_email.downcase)
-  #   user
-  # end
 end

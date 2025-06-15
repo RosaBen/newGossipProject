@@ -27,8 +27,17 @@
                       method: :delete,
                       form: { data: { turbo_confirm: "Es-tu sûr de vouloir supprimer ce gossip ?" } },
                       class: "btn btn-danger" %>
+                      <br>
                 </div>
                 <% end %>
+                <div>
+  <%= link_to "💬 Ajouter un commentaire", "#commentForm", 
+    class: "btn btn-outline-primary mt-4", 
+    data: { bs_toggle: "collapse" }, 
+    role: "button" %>
+
+                  <%= render 'shared/comment_form' %>
+</div>
             </div>
         </div>
     </div>

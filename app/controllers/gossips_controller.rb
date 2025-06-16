@@ -7,7 +7,7 @@ class GossipsController < ApplicationController
   end
 
   def show
-    @gossip = Gossip.includes(:tags).find(params[:id])
+    @gossip = Gossip.includes(:tags, comments: :user).find(params[:id])
   end
 
   def new

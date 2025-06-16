@@ -55,10 +55,13 @@
                   class: "btn btn-outline-primary mt-4", 
                   data: { bs_toggle: "collapse" }, 
                   role: "button" %>
-
+                  <% if @gossip.comments.any? %>
+                  <h4>Commentaires</h4><p>Nombre de commentaires : <%= @gossip.comments.count %></p>
+                <% end %>
                 <div class="collapse mt-3" id="commentForm">
                   <%= render 'shared/comment_form', gossip: @gossip %>
                 </div>
+                <%= render partial: 'shared/comments_list', locals: { gossip: @gossip } %>
             </div>
         </div>
     </div>

@@ -7,13 +7,4 @@
     <%= form.submit "Envoyer", class: "btn btn-success" %>
   <% end %>
 </div>
-<% if @gossip.comments.any? %>
-  <div class="card shadow-sm border border-info mb-4 mt-5">
-    <div class="card-header bg-info text-white">
-      💬 <strong><%= pluralize(@gossip.comments.count, "Commentaire") %></strong>
-    </div>
-    <div class="card-body">
-      <%= render 'shared/comments_list', gossip: @gossip %>
-    </div>
-  </div>
-<% end %>
+

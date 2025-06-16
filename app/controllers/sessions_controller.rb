@@ -7,7 +7,11 @@ class SessionsController < ApplicationController
     @user = User.find_by_email_or_pseudo(params[:email_or_pseudo])
     if @user && @user.authenticate(params[:password])
       login(@user)
-      remember(@user)
+      if params[:remember_me] == "1"
+        remember(@user)
+      else
+        forget(@user)
+      end
       flash[:success] = "Bienvenue #{@user.pseudo} !"
       redirect_to gossips_path
     else

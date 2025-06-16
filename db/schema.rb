@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_15_212533) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_16_080035) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -57,6 +57,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_15_212533) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "gossip_tags", force: :cascade do |t|
+    t.integer "gossip_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gossip_id"], name: "index_gossip_tags_on_gossip_id"
+    t.index ["tag_id"], name: "index_gossip_tags_on_tag_id"
+  end
+
   create_table "gossips", force: :cascade do |t|
     t.string "title", null: false
     t.text "content", null: false
@@ -64,6 +73,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_15_212533) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_gossips_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "gossip_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gossip_id"], name: "index_likes_on_gossip_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -82,5 +107,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_15_212533) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "gossips"
   add_foreign_key "comments", "users"
+  add_foreign_key "gossip_tags", "gossips"
+  add_foreign_key "gossip_tags", "tags"
   add_foreign_key "gossips", "users"
+  add_foreign_key "likes", "gossips"
+  add_foreign_key "likes", "users"
 end

@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   belongs_to :city
   has_one_attached :avatar
+  has_many :likes, dependent: :destroy
+  has_many :liked_gossips, through: :likes, source: :gossip
 before_save :pseudo_downcase
 before_save :email_downcase
   validates :email,
@@ -13,7 +15,7 @@ before_save :email_downcase
   validates :password, length: { minimum: 6 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { new_record? || !password.nil? }
   validates :pseudo, presence: true, uniqueness: { case_sensitive: false }, length: { minimum: 3, maximum: 20 }
-  validates :bio, length: { maximum: 500 }, allow_blank: true
+  validates :bio, length: { maximum: 2000 }, allow_blank: true
 
   def pseudo_downcase
     self.pseudo = pseudo.downcase if pseudo.present?

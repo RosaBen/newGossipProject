@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "like_section_#{gossip.id}" do %>
+  <%= form_with url: gossip_likes_path(gossip), method: :post, data: { turbo_stream: true }, class: "d-inline" do %>
+    <% liked = gossip.likes.exists?(user: current_user) %>
+    <button type="submit" class="btn p-0 border-0 bg-transparent fs-4" title="J'aime">
+      <span style="color: <%= liked ? 'blue' : 'inherit' %>;">
+        <%= liked ? '💙' : '🤍' %>
+      </span>
+      <span class="ms-1"><%= gossip.likes.count %></span>
+    </button>
+  <% end %>
+<% end %>

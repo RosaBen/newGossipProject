@@ -3,12 +3,20 @@ require "open-uri"
 # rails db:drop db:create db:migrate db:seed
 
 puts "🔄 Nettoyage des données..."
+GossipTag.delete_all
+Comment.delete_all
+Like.delete_all
+Tag.delete_all
 Gossip.delete_all
 User.delete_all
 City.delete_all
 ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='cities'")
 ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='users'")
 ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='gossips'")
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='comments'")
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='likes'")
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='tags'")
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='gossip_tags'")
 
 avatar_path = Rails.root.join('db', 'seeds', "assets", 'avatar.png')
 
@@ -21,13 +29,13 @@ puts "🏙️ Ajout des villes"
 end
 
 puts "👤 Ajout des utilisateurs"
-User.create!(pseudo: "rosa", email: "test@test.com", bio: Faker::Lorem.paragraph(sentence_count: 5), password: "password", password_confirmation: "password", city: City.create!(city_name: "Paris", zip_code: "75000"))
+User.create!(pseudo: "rosa", email: "test@test.com", bio: Faker::Hipster.paragraphs(number: 2), password: "password", password_confirmation: "password", city: City.create!(city_name: "Paris", zip_code: "75000"))
 10.times do
   password = "password"
   user=User.create!(
-    pseudo: Faker::FunnyName.name,
+    pseudo: Faker::Name.first_name,
     email: Faker::Internet.unique.email,
-    bio: Faker::Lorem.paragraph(sentence_count: 5),
+    bio: Faker::Hipster.paragraphs(number: 2),
     password: password,
     password_confirmation: password,
     city: City.all.sample,
@@ -44,14 +52,48 @@ puts "🔤 Contenu ajouté"
   url = "https://picsum.photos/200"
   file = URI.open(url)
   gossip = Gossip.create!(
-    title: Faker::Lorem.sentence(word_count: 3),
-    content: Faker::Lorem.paragraph(sentence_count: 4),
+    title: Faker::Company.buzzword,
+    content: Faker::Lorem.paragraphs(number: 1),
     user: User.all.sample
   )
   gossip.media.attach(
     io: file,
     filename: "image.jpg",
     content_type: "image/jpeg"
+  )
+end
+
+puts "💬 Ajout des commentaires"
+10.times do
+  Comment.create!(
+    content: Faker::GreekPhilosophers.quote,
+    user: User.all.sample,
+    gossip: Gossip.all.sample,
+  )
+end
+puts " 🏷️ Ajouts des tags"
+10.times do
+  tag = Tag.create!(name: Faker::Emotion.noun)
+  GossipTag.create!(
+    gossip: Gossip.all.sample,
+    tag: tag
+  )
+end
+
+puts "📎  lier les tags au gossip"
+10.times do
+  gossip = Gossip.all.sample
+  tag = Tag.all.sample
+  GossipTag.create!(
+    gossip: gossip,
+    tag: tag
+  )
+end
+puts "👍 Ajout des likes"
+10.times do
+  Like.create!(
+    user: User.all.sample,
+    gossip: Gossip.all.sample
   )
 end
 

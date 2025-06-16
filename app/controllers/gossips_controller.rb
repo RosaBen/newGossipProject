@@ -53,6 +53,7 @@ class GossipsController < ApplicationController
     end
   end
 
+
   private
   # puts "PARAMS ----------"
   # puts params.inspect

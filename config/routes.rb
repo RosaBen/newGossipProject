@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   resources :cities
   resources :gossips do
     resources :comments
+    resources :likes, only: [ :create ]
   end
-  get "/contact", to: "static_pages#contact", as: "contact"
-  get "/team", to: "static_pages#team", as: "team"
 
+get "/contact", to: "static_pages#contact", as: "contact"
+get "/team", to: "static_pages#team", as: "team"
+post "like", to: "likes#toggle"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

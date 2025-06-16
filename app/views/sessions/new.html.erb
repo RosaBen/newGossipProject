@@ -12,6 +12,10 @@
     <%= form.label :password, "Mot de passe" %>
     <%= form.password_field :password, placeholder: "Entrez votre mot de passe", class: "form-control" %>
   </div>
+    <div class="form-check mb-3">
+    <%= form.check_box :remember_me, class: "form-check-input" %>
+    <%= form.label :remember_me, "Se souvenir de moi", class: "form-check-label" %>
+  </div>
 <div class="d-grid">
   <%= form.submit " 🚪Se connecter", class: "btn btn-primary" %>
   </div>

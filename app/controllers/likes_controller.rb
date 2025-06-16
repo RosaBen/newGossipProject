@@ -20,7 +20,13 @@ class LikesController < ApplicationController
           locals: { gossip: @gossip }
         )
       end
-      format.html { redirect_to gossips_path(@gossips) }
+      format.html do
+        if URI(request.referer).path == gossip_path(@gossip)
+          redirect_to @gossip
+        else
+          redirect_back fallback_location: @gossip
+        end
+      end
     end
   end
 

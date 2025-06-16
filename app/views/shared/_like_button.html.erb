@@ -1,0 +1,35 @@
+<%= turbo_frame_tag "like_section_#{gossip.id}" do %>
+  <%= form_with url: gossip_likes_path(gossip), method: :post, data: { turbo_stream: true }, class: "d-inline" do %>
+    <% liked = gossip.likes.exists?(user: current_user) %>
+    <button type="submit" class="btn p-0 border-0 bg-transparent fs-4" title="J'aime">
+      <span style="color: <%= liked ? 'blue' : 'inherit' %>;">
+        <%= liked ? '💙' : '🤍' %>
+      </span>
+      <span class="ms-1"><%= gossip.likes.count %></span>
+    </button>
+  <% end %>
+<% if gossip.likes.any? %>
+    <button type="button" class="btn btn-sm btn-link text-muted"
+            data-bs-toggle="modal" data-bs-target="#likesModal_<%= gossip.id %>">
+      Voir les likers
+    </button>
+  <% end %>
+
+<% if gossip.likes.any? %>
+  <div class="modal fade" id="likesModal_<%= gossip.id %>" tabindex="-1" aria-labelledby="likesModalLabel_<%= gossip.id %>" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="likesModalLabel_<%= gossip.id %>">Utilisateurs ayant aimé</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <% gossip.liking_users.each do |user| %>
+            <p><%= user.pseudo || user.first_name || "Utilisateur anonyme" %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% end %>

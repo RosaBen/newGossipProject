@@ -12,37 +12,50 @@
                 <div class="speech-bubble bg-light p-4 mb-3">
                     <%= simple_format(@gossip.content) %>
                 </div>
+                        
+<%= render partial: "shared/like_button", locals: { gossip: @gossip } %>
+
+
+                <br>
+                <h5 class="mt-4">🏷️ Tags associés :</h5>
+                <% @gossip.tags.each do |tag| %>
+                  <span class="badge bg-info text-white me-1">#<%= tag.name %></span>
+                <% end %>
+                <br>
                 <p class="text-muted small mb-3">
                   🧑 Par <strong><%= @gossip.user&.pseudo || "Auteur inconnu" %></strong>
                   <br>
-                  🏠 <strong><%= link_to @gossip.user.city.city_name, city_path(@gossip.user.city), class: "text-decoration-none" %></strong>
+                  🏠 <strong>
+                    <% if @gossip.user&.city %>
+                      <%= link_to @gossip.user.city.city_name, city_path(@gossip.user.city), class: "text-decoration-none" %>
+                    <% else %>
+                      Ville inconnue
+                    <% end %>
+                  </strong>
                   <br>
                   🕒 Créé le :<%= l(@gossip.created_at, format: :long) %>
                 </p>
                 <% if current_user == @gossip.user %>
-                <div class="d-flex justify-content-start align-items-center mb-4" style="gap: 10px;">
-                  <%= link_to "✏️ Modifier ce Gossip", edit_gossip_path(@gossip), class: "btn btn-warning" %>
-                  <%# Avec Turbo & Importmap, le plus simple et robuste c’est d’utiliser button_to pour les actions DELETE : %>
-                  <%= button_to "🗑️ Supprimer", gossip_path(@gossip),
-                      method: :delete,
-                      form: { data: { turbo_confirm: "Es-tu sûr de vouloir supprimer ce gossip ?" } },
-                      class: "btn btn-danger" %>
-                      <br>
-                </div>
+                  <div class="d-flex justify-content-start align-items-center mb-4" style="gap: 10px;">
+                    <%= link_to "✏️ Modifier ce Gossip", edit_gossip_path(@gossip), class: "btn btn-warning" %>
+                    <%# Avec Turbo & Importmap, le plus simple et robuste c’est d’utiliser button_to pour les actions DELETE : %>
+                    <%= button_to "🗑️ Supprimer", gossip_path(@gossip), method: :delete, data: { confirm: "Êtes-vous sûr de vouloir supprimer ce gossip ?" }, class: "btn btn-danger" %>
+                  </div>
                 <% end %>
-                <div>
-  <%= link_to "💬 Ajouter un commentaire", "#commentForm", 
-    class: "btn btn-outline-primary mt-4", 
-    data: { bs_toggle: "collapse" }, 
-    role: "button" %>
 
+                <%= link_to "💬 Ajouter un commentaire", "#commentForm", 
+                  class: "btn btn-outline-primary mt-4", 
+                  data: { bs_toggle: "collapse" }, 
+                  role: "button" %>
+
+                <div class="collapse mt-3" id="commentForm">
                   <%= render 'shared/comment_form', gossip: @gossip %>
-</div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-        <div class="d-flex justify-content-around align-items-center mb-4" style="gap: 10px;">
-          <%= link_to "← Retour à la liste", gossips_path, class: "btn btn-outline-secondary" %>
-          <%= link_to "📝 Créer un nouveau gossip", new_gossip_path, class: "btn btn-primary " %>
-        </div>
+<div class="d-flex justify-content-around align-items-center mb-4" style="gap: 10px;">
+  <%= link_to "← Retour à la liste", gossips_path, class: "btn btn-outline-secondary" %>
+  <%= link_to "📝 Créer un nouveau gossip", new_gossip_path, class: "btn btn-primary " %>
+</div>

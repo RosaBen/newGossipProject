@@ -9,3 +9,19 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   z-index: 100 !important;
 }
+
+
+/* likes */
+
+
+.heart-button {
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.heart-button:hover {
+  transform: scale(1.2);
+}
+
+.heart-button.liked {
+  color: blue;
+}

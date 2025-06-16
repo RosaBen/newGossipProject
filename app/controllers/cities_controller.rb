@@ -1,9 +1,9 @@
 class CitiesController < ApplicationController
   def show
     @city = City.find(params[:id])
-    @users = @city.users
-    @gossips = Gossip.where(user: @users)
+    @gossips = @city.gossips
   end
+
 
   def index
     @cities = City.all

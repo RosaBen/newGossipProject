@@ -20,7 +20,7 @@ ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='l
 ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='tags'")
 ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='gossip_tags'")
 
-avatar_path = Rails.root.join('db', 'seeds', "assets", 'avatar.png')
+avatar_path = Rails.root.join('app/assets/images/default_avatar.png')
 
 puts "🏙️ Ajout des villes"
 10.times do
@@ -42,11 +42,13 @@ User.create!(pseudo: "rosa", email: "test@test.com", bio: Faker::Hipster.paragra
     password_confirmation: password,
     city: City.all.sample,
   )
-  user.avatar.attach(
-    io: File.open(avatar_path),
-    filename: "avatar.png",
-    content_type: "image/png"
-  )
+  if rand < 0.5
+    user.avatar.attach(
+      io: File.open(avatar_path),
+      filename: "avatar.png",
+      content_type: "image/png"
+    )
+  end
 end
 
 puts "🔤 Contenu ajouté"

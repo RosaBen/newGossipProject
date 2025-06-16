@@ -1,10 +1,13 @@
 <div class="card mb-5 shadow-sm">
     <div class="row g-0">
         <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
-            <%= image_tag 'placeholder_avatar.png',
-              alt: @gossip.user&.pseudo || "Auteur inconnu",
-              class: "img-fluid rounded-circle border border-2 border-primary",
-              style: "max-width: 150px;" %>
+<%= image_tag 'default_avatar.png',
+  alt: @gossip.user&.pseudo || "Auteur inconnu",
+  class: "img-fluid rounded-circle border border-2 border-primary",
+  style: "max-width: 150px;" %>
+
+
+
         </div>
         <div class="col-md-8">
             <div class="card-body">
@@ -23,7 +26,12 @@
                 <% end %>
                 <br>
                 <p class="text-muted small mb-3">
-                  🧑 Par <strong><%= @gossip.user&.pseudo || "Auteur inconnu" %></strong>
+                  🧑 Par 
+<% if @gossip.user %>
+  <%= link_to @gossip.user.pseudo, user_path(@gossip.user), class: "fw-bold text-decoration-none" %>
+<% else %>
+  <strong>Auteur inconnu</strong>
+<% end %>
                   <br>
                   🏠 <strong>
                     <% if @gossip.user&.city %>

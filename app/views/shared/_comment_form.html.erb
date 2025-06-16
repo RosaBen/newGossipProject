@@ -1,4 +1,4 @@
- <div class="collapse mt-3" id="commentForm">
+<div class="collapse mt-3" id="commentForm">
   <%= form_with model: [@gossip, Comment.new], local: true do |form| %>
     <div class="mb-3">
       <%= form.label :content, "Votre commentaire", class: "form-label" %>
@@ -6,35 +6,14 @@
     </div>
     <%= form.submit "Envoyer", class: "btn btn-success" %>
   <% end %>
- </div>
-             <% if @gossip.comments.any? %>
-            <div class="card shadow-sm border border-info mb-4 mt-5">
-                <div class="card-header bg-info text-white">
-                    💬 <strong><%= pluralize(@gossip.comments.count, "Commentaire") %></strong>
-                </div>
-                <div class="card-body">
-                    <% @gossip.comments.each do |comment| %>
-                    <div class="mb-3 p-3 border rounded bg-light">
-                        <p class="mb-1"><%= simple_format(comment.content) %></p>
-                        <p class="text-muted small mb-2">
-                            Posté le <%= l(comment.created_at, format: :short) %>
-                            <% if comment.user.present? %>
-                            par <strong><%= comment.user.email %></strong>
-                            <% end %>
-                        </p>
-                        <% if logged_in? && current_user == comment.user %>
-                        <div class="d-flex gap-2">
-                            <%= link_to "✏️ Modifier", edit_gossip_comment_path(@gossip, comment), class: "btn btn-sm btn-outline-secondary" %>
-                            <%= link_to "🗑️ Supprimer", gossip_comment_path(@gossip, comment),
-                    method: :delete,
-                    data: { confirm: "Supprimer ce commentaire ?" },
-                    class: "btn btn-sm btn-outline-danger" %>
-                        </div>
-                        <% end %>
-                    </div>
-                    <% end %>
-                </div>
-            </div>
-            <% else %>
-            <p class="text-muted mt-4">Aucun commentaire pour le moment.</p>
-            <% end %>
+</div>
+<% if @gossip.comments.any? %>
+  <div class="card shadow-sm border border-info mb-4 mt-5">
+    <div class="card-header bg-info text-white">
+      💬 <strong><%= pluralize(@gossip.comments.count, "Commentaire") %></strong>
+    </div>
+    <div class="card-body">
+      <%= render 'shared/comments_list', gossip: @gossip %>
+    </div>
+  </div>
+<% end %>

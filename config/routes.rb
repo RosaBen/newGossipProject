@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy", as: "logout"
   resources :cities
   resources :gossips do
-    resources :comments
+    resources :comments do
+      member do
+        post :restore_previous
+      end
+    end
   end
   get "/contact", to: "static_pages#contact", as: "contact"
   get "/team", to: "static_pages#team", as: "team"

@@ -30,8 +30,10 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    redirect_to gossip_path(@gossip), notice: "Commentaire supprimé."
+    flash[:notice] = "Commentaire supprimé."
+    redirect_to gossip_path(@gossip)
   end
+
 
   private
 

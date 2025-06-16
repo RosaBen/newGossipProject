@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <div class="card mx-auto" style="max-width: 600px;">
+    <div class="card-header text-center bg-primary text-white">
+      <h2 class="mb-0"><%= @user.pseudo %></h2>
+    </div>
+    <div class="card-body">
+      <div class="d-flex align-items-center mb-4">
+        <% if @user.avatar.attached? %>
+          <%= image_tag @user.avatar.variant(resize_to_fill: [100, 100]), class: "rounded-circle me-3", alt: "Avatar de #{@user.pseudo}" %>
+        <% else %>
+          <div class="bg-secondary rounded-circle me-3" style="width: 100px; height: 100px;"></div>
+        <% end %>
+        <div>
+          <p class="mb-1"><strong>Email:</strong> <%= @user.email %></p>
+          <p class="mb-1"><strong>Ville:</strong> <%= @user.city ? @user.city.city_name : "Non renseignée" %></p>
+          <p class="mb-0"><strong>Bio:</strong> <%= @user.bio.presence || "Aucune bio disponible" %></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3 class="mb-3">Ses Gossips</h3>
+      <% if @user.gossips.any? %>
+        <%= render 'shared/gossips_list', gossips: @user.gossips %>
+      <% else %>
+        <p class="text-muted">Cet utilisateur n'a pas encore publié de gossip.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

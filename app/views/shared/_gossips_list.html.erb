@@ -14,7 +14,13 @@
 <%= render partial: "shared/like_button", locals: { gossip: gossip } %>
 
             <p class="text-muted mb-1">
-              🧑 Par <strong><%= gossip.user&.pseudo || "Auteur inconnu" %></strong>
+           🧑 Par 
+<% if gossip.user %>
+  <%= link_to gossip.user.pseudo, user_path(gossip.user), class: "fw-bold text-decoration-none" %>
+<% else %>
+  <strong>Auteur inconnu</strong>
+<% end %>
+
               <br>
               🏠 <strong>
                 <% if gossip.user&.city %>

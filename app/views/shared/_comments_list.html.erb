@@ -14,7 +14,7 @@
                             class: "btn btn-sm btn-outline-secondary",
                             data: { bs_toggle: "collapse" },
                             role: "button" %>
-                            <%= link_to "🗑️ Supprimer", gossip_comment_path(@gossip, comment),
+                            <%= button_to "🗑️ Supprimer", gossip_comment_path(@gossip, comment),
                                 method: :delete,
                                 data: { confirm: "Supprimer ce commentaire ?" },
                                 class: "btn btn-sm btn-outline-danger" %>

@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :gossips
+  has_many :comments, dependent: :destroy
+  belongs_to :city
   has_one_attached :avatar
 before_save :pseudo_downcase
 before_save :email_downcase

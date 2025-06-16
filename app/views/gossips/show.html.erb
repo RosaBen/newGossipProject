@@ -13,9 +13,11 @@
                     <%= simple_format(@gossip.content) %>
                 </div>
                 <p class="text-muted small mb-3">
-                  Par <strong><%= @gossip.user&.pseudo || "Auteur inconnu" %></strong>
+                  🧑 Par <strong><%= @gossip.user&.pseudo || "Auteur inconnu" %></strong>
                   <br>
-                  <%= l(@gossip.created_at, format: :long) %>
+                  🏠 <strong><%= link_to @gossip.user.city.city_name, city_path(@gossip.user.city), class: "text-decoration-none" %></strong>
+                  <br>
+                  🕒 Créé le :<%= l(@gossip.created_at, format: :long) %>
                 </p>
                 <% if current_user == @gossip.user %>
                 <div class="d-flex justify-content-start align-items-center mb-4" style="gap: 10px;">
@@ -25,8 +27,17 @@
                       method: :delete,
                       form: { data: { turbo_confirm: "Es-tu sûr de vouloir supprimer ce gossip ?" } },
                       class: "btn btn-danger" %>
+                      <br>
                 </div>
                 <% end %>
+                <div>
+  <%= link_to "💬 Ajouter un commentaire", "#commentForm", 
+    class: "btn btn-outline-primary mt-4", 
+    data: { bs_toggle: "collapse" }, 
+    role: "button" %>
+
+                  <%= render 'shared/comment_form', gossip: @gossip %>
+</div>
             </div>
         </div>
     </div>

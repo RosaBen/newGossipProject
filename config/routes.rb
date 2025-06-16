@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#new", as: "login"
   post "/sessions", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: "logout"
-  resources :gossips
+  resources :cities
+  resources :gossips do
+    resources :comments
+  end
   get "/contact", to: "static_pages#contact", as: "contact"
   get "/team", to: "static_pages#team", as: "team"
 

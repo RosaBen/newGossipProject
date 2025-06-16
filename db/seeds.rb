@@ -1,6 +1,8 @@
 require "faker"
 require "open-uri"
 # rails db:drop db:create db:migrate db:seed
+# rails db:migrate VERSION=0
+# rails db:migrate VERSION=20231010123456
 
 puts "🔄 Nettoyage des données..."
 GossipTag.delete_all
@@ -80,15 +82,20 @@ puts " 🏷️ Ajouts des tags"
   )
 end
 
-puts "📎  lier les tags au gossip"
-10.times do
+puts "📎 Lier les tags aux gossips sans doublon"
+
+5.times do
   gossip = Gossip.all.sample
-  tag = Tag.all.sample
-  GossipTag.create!(
-    gossip: gossip,
-    tag: tag
-  )
+  available_tags = Tag.where.not(id: gossip.tags.pluck(:id))
+
+  if available_tags.any?
+    tag = available_tags.sample
+    GossipTag.create!(gossip: gossip, tag: tag)
+  else
+    puts "⚠️ Aucun tag disponible pour le gossip ID #{gossip.id} (tous déjà utilisés)"
+  end
 end
+
 puts "👍 Ajout des likes"
 10.times do
   Like.create!(

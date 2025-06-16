@@ -5,6 +5,12 @@
             <h5 class="card-title text-dark"><%=gossip.title%></h5>
             <p class="card-text"><%= truncate(gossip.content, length: 60, separator: '...') %></p>
             <hr>
+            <h6 class="mt-2">🏷️ Tags :</h6>
+<% gossip.tags.each do |tag| %>
+  <span class="badge bg-info text-white me-1">#<%= tag.name %></span>
+<% end %>
+<br>
+
 <%= render partial: "shared/like_button", locals: { gossip: gossip } %>
 
             <p class="text-muted mb-1">

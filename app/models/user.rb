@@ -34,4 +34,9 @@ before_save :email_downcase
   def self.find_by_email_or_pseudo(email_or_pseudo)
     where("LOWER(email) = ? OR LOWER(pseudo) = ?", email_or_pseudo, email_or_pseudo).first
   end
+
+  def remember(remember_token)
+    remember_digest = BCrypt::Password.create(remember_token)
+    self.update(remember_digest: remember_digest)
+  end
 end

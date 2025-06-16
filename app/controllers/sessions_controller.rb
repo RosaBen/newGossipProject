@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     @user = User.find_by_email_or_pseudo(params[:email_or_pseudo])
     if @user && @user.authenticate(params[:password])
       login(@user)
+      remember(@user)
       flash[:success] = "Bienvenue #{@user.pseudo} !"
       redirect_to gossips_path
     else
@@ -16,7 +17,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    logout
+    logout(current_user)
     flash[:success] = "Vous avez été déconnecté."
     redirect_to root_path
   end

@@ -1,0 +1,33 @@
+<%= form_with model: @gossip, local: true do |form| %>
+  <div class="mt-5 ms-5 me-5">
+    
+    <div class="mb-3">
+      <%= form.label :title, "Titre" %>
+      <%= form.text_field :title, class: "form-control" %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :content, "Contenu" %>
+      <%= form.text_area :content, class: "form-control" %>
+    </div>
+      <%= hidden_field_tag :pseudo, @gossip.user&.pseudo %>
+    <div class="mb-3">
+      <%= form.label :tag_ids, "🏷️ Tags", class: "form-label" %>
+      <div class="d-flex flex-wrap gap-2">
+        <%= form.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |b| %>
+          <div class="form-check me-2">
+            <%= b.check_box(class: "form-check-input") %>
+            <%= b.label(class: "form-check-label") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+        <div class="mb-3">
+      <%= label_tag :new_tag_name, "Ajouter un nouveau tag", class: "form-label" %>
+      <%= text_field_tag :new_tag_name, nil, class: "form-control", placeholder: "Ex: Drôle, Mystère..." %>
+    </div>
+    
+    <%= form.submit @gossip.new_record? ? "Créer Gossip" : "Modifier Gossip", class: "btn btn-primary" %>
+    
+  </div>
+<% end %>

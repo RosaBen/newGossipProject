@@ -1,0 +1,44 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg rounded">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">📝 Crée ton compte</h3>
+
+          <%= form_for @user, url: users_path, local: true do |f| %>
+
+            <div class="mb-3">
+              <%= f.label :pseudo, "👤 Pseudo" %>
+              <%= f.text_field :pseudo, class: "form-control mb-2", placeholder: "Entrez votre pseudo" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :email, "📧 Email" %>
+              <%= f.email_field :email, class: "form-control mb-2", placeholder: "exemple@mail.com" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :bio, "🗒️ Bio" %>
+              <%= f.text_area :bio, class: "form-control mb-2", placeholder: "Parlez un peu de vous..." %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password, "🔒 Mot de passe" %>
+              <%= f.password_field :password, class: "form-control mb-2", placeholder: "••••••••" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password_confirmation, "🔁 Confirmation du mot de passe" %>
+              <%= f.password_field :password_confirmation, class: "form-control mb-2", placeholder: "••••••••" %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "🚀 Créer mon compte", class: "btn btn-primary mt-3" %>
+            </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

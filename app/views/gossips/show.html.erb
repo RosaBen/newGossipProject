@@ -1,0 +1,72 @@
+<div class="card mb-5 shadow-sm">
+    <div class="row g-0">
+        <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
+<%= image_tag 'default_avatar.png',
+  alt: @gossip.user&.pseudo || "Auteur inconnu",
+  class: "img-fluid rounded-circle border border-2 border-primary",
+  style: "max-width: 150px;" %>
+
+
+
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h2 class="card-title text-primary mb-3"><%= @gossip.title %></h2>
+                <div class="speech-bubble bg-light p-4 mb-3">
+                    <%= simple_format(@gossip.content) %>
+                </div>
+                        
+<%= render partial: "shared/like_button", locals: { gossip: @gossip } %>
+
+
+                <br>
+                <h5 class="mt-4">🏷️ Tags associés :</h5>
+                <% @gossip.tags.each do |tag| %>
+                  <span class="badge bg-info text-white me-1">#<%= tag.name %></span>
+                <% end %>
+                <br>
+                <p class="text-muted small mb-3">
+                  🧑 Par 
+<% if @gossip.user %>
+  <%= link_to @gossip.user.pseudo, user_path(@gossip.user), class: "fw-bold text-decoration-none" %>
+<% else %>
+  <strong>Auteur inconnu</strong>
+<% end %>
+                  <br>
+                  🏠 <strong>
+                    <% if @gossip.user&.city %>
+                      <%= link_to @gossip.user.city.city_name, city_path(@gossip.user.city), class: "text-decoration-none" %>
+                    <% else %>
+                      Ville inconnue
+                    <% end %>
+                  </strong>
+                  <br>
+                  🕒 Créé le :<%= l(@gossip.created_at, format: :long) %>
+                </p>
+                <% if current_user == @gossip.user %>
+                  <div class="d-flex justify-content-start align-items-center mb-4" style="gap: 10px;">
+                    <%= link_to "✏️ Modifier ce Gossip", edit_gossip_path(@gossip), class: "btn btn-warning" %>
+                    <%# Avec Turbo & Importmap, le plus simple et robuste c’est d’utiliser button_to pour les actions DELETE : %>
+                    <%= button_to "🗑️ Supprimer", gossip_path(@gossip), method: :delete, data: { confirm: "Êtes-vous sûr de vouloir supprimer ce gossip ?" }, class: "btn btn-danger" %>
+                  </div>
+                <% end %>
+
+                <%= link_to "💬 Ajouter un commentaire", "#commentForm", 
+                  class: "btn btn-outline-primary mt-4", 
+                  data: { bs_toggle: "collapse" }, 
+                  role: "button" %>
+                  <% if @gossip.comments.any? %>
+                  <h4>Commentaires</h4><p>Nombre de commentaires : <%= @gossip.comments.count %></p>
+                <% end %>
+                <div class="collapse mt-3" id="commentForm">
+                  <%= render 'shared/comment_form', gossip: @gossip %>
+                </div>
+                <%= render partial: 'shared/comments_list', locals: { gossip: @gossip } %>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-around align-items-center mb-4" style="gap: 10px;">
+  <%= link_to "← Retour à la liste", gossips_path, class: "btn btn-outline-secondary" %>
+  <%= link_to "📝 Créer un nouveau gossip", new_gossip_path, class: "btn btn-primary " %>
+</div>

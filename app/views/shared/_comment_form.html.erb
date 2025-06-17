@@ -1,0 +1,10 @@
+<div class="collapse mt-3" id="commentForm">
+  <%= form_with model: [@gossip, Comment.new], local: true do |form| %>
+    <div class="mb-3">
+      <%= form.label :content, "Votre commentaire", class: "form-label" %>
+      <%= form.text_area :content, class: "form-control", rows: 3, maxlength: 400 %>
+    </div>
+    <%= form.submit "Envoyer", class: "btn btn-success" %>
+  <% end %>
+</div>
+

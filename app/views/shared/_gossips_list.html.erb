@@ -1,0 +1,39 @@
+<div>
+  <% @gossips.each do |gossip| %>
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title text-dark"><%=gossip.title%></h5>
+            <p class="card-text"><%= truncate(gossip.content, length: 60, separator: '...') %></p>
+            <hr>
+            <h6 class="mt-2">🏷️ Tags :</h6>
+<% gossip.tags.each do |tag| %>
+  <span class="badge bg-info text-white me-1">#<%= tag.name %></span>
+<% end %>
+<br>
+
+<%= render partial: "shared/like_button", locals: { gossip: gossip } %>
+
+            <p class="text-muted mb-1">
+           🧑 Par 
+<% if gossip.user %>
+  <%= link_to gossip.user.pseudo, user_path(gossip.user), class: "fw-bold text-decoration-none" %>
+<% else %>
+  <strong>Auteur inconnu</strong>
+<% end %>
+
+              <br>
+              🏠 <strong>
+                <% if gossip.user&.city %>
+                  <%= link_to gossip.user.city.city_name, city_path(gossip.user.city), class: "text-decoration-none" %>
+                <% else %>
+                  Ville inconnue
+                <% end %>
+              </strong>
+              <br>
+              🕒 Créé le : <%= l(gossip.created_at, format: :short) %>
+            </p>
+            <%= link_to "Lire plus", gossip_path(gossip), class: "btn btn-outline-primary mt-2" %>
+        </div>
+    </div>
+  <% end %>
+</div>

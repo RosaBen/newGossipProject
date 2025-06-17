@@ -1,0 +1,46 @@
+<%# <p>Avatar attaché ? : <%= @user.avatar.attached? %>
+
+<%# </p> %>
+<%# <p>Nom fichier avatar : <%= @user.avatar.blob.filename if @user.avatar.attached? %>
+<%# </p> %>
+
+
+<div class="container mt-4">
+  <div class="card mx-auto" style="max-width: 600px;">
+    <div class="mb-3 text-center">
+<%= image_tag 'default_avatar.png',
+  alt: @user.pseudo || "Auteur inconnu",
+  class: "img-fluid rounded-circle border border-2 border-primary",
+  style: "max-width: 150px;" %>
+
+    </div>
+
+
+
+    <!-- Header : Bouton à droite + pseudo centré -->
+    <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+      <h2 class="mb-0 mx-auto"><%= @user.pseudo %></h2>
+      <%= link_to '⬅️ Retour aux gossips', gossips_path, class: 'btn btn-light btn-sm ms-auto' %>
+    </div>
+
+    <div class="card-body text-center">
+
+      <!-- Avatar centré -->
+      <!-- Infos utilisateur -->
+      <p><strong>Email :</strong> <%= @user.email %></p>
+      <p><strong>Ville :</strong> <%= @user.city&.city_name || "Non renseignée" %></p>
+      <p><strong>Bio :</strong> <%= @user.bio.presence || "Aucune bio disponible" %></p>
+
+      <hr>
+
+      <!-- Gossips -->
+      <h4 class="mb-3">Ses Gossips</h4>
+      <% if @user.gossips.any? %>
+        <%= render 'shared/gossips_list', gossips: @user.gossips %>
+      <% else %>
+        <p class="text-muted">Cet utilisateur n'a pas encore publié de gossip.</p>
+      <% end %>
+
+    </div>
+  </div>
+</div>

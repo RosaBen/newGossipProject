@@ -1,0 +1,13 @@
+
+    <div id="teamCarousel" class="carousel carousel-fade slide shadow-lg bg-light rounded p-4" data-bs-ride="carousel" style="max-width: 600px; margin: auto;">
+        <div class="carousel-inner">
+            <% team.each_with_index do |member, index| %>
+            <div class="carousel-item <%= 'active' if index == 0 %> text-center">
+                <%= image_tag member[:image], alt: member[:name], class: "rounded-circle d-block mx-auto", style: "height: 250px; width: 250px; object-fit: cover;" %>
+                <div class="mt-4">
+                    <h4 class="fw-bold"><%= member[:name] %></h4>
+                    <p class="text-muted fst-italic">"<%= member[:quote] %>"</p>
+                </div>
+            </div>
+            <% end %>
+        </div>

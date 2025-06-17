@@ -1,0 +1,37 @@
+                <%# <% raise "Gossip manquant" unless defined?(gossip) %>
+<% if gossip.comments.any? %>
+  <div class="card shadow-sm border border-info mb-4 mt-5">
+    <div class="card-header bg-info text-white">
+      💬 <strong><%= pluralize(gossip.comments.count, "Commentaire") %></strong>
+    </div>
+    <div class="card-body">
+      <% gossip.comments.each do |comment| %>
+        <div class="mb-3 p-3 border rounded bg-light">
+          <p class="mb-1"><%= simple_format(comment.content) %></p>
+          <p class="text-muted small mb-2">
+            Posté le <%= l(comment.created_at, format: :short) %>
+            <% if comment.user.present? %>
+              par <strong><%= comment.user.email %></strong>
+            <% end %>
+          </p>
+                        <% if logged_in? && current_user == comment.user %>
+                        <div class="d-flex gap-2">
+                            <%= link_to "✏️ Modifier", "#commentEdit-#{comment.id}", 
+                            class: "btn btn-sm btn-outline-secondary",
+                            data: { bs_toggle: "collapse" },
+                            role: "button" %>
+                            <%= button_to "🗑️ Supprimer", gossip_comment_path(gossip, comment),
+                                method: :delete,
+                                data: { confirm: "Supprimer ce commentaire ?" },
+                                class: "btn btn-sm btn-outline-danger" %>
+                        </div>
+                        <%= render partial: 'shared/comment_edit', locals: { gossip: gossip, comment: comment } %>
+
+                        <% end %>
+                    </div>
+                    <% end %>
+                </div>
+                </div>
+<% else %>
+  <p class="text-muted mt-3">Aucun commentaire pour l'instant.</p>
+<% end %>

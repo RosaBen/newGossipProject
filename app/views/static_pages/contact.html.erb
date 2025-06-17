@@ -1,0 +1,22 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4" style="max-width: 600px; width: 100%; border-radius: 1rem;">
+        <div class="text-center mb-4">
+            <div class="mx-auto" style="width: 120px; height: 120px; overflow: hidden; border-radius: 50%; border: 3px solid #ccc; box-shadow: 0 0 12px rgba(0,0,0,0.15);">
+                <%= image_tag "contact.png", alt: "Contact Avatar", style: "width: 100%; height: 100%; object-fit: cover;" %>
+            </div>
+        </div>
+        <div class="text-center">
+            <h2 class="text-primary mb-3">Contact</h2>
+            <p class="text-muted">Pour toute question, suggestion ou ragot croustillant, écris-nous à :</p>
+            <p class="fw-bold">
+                <a href="mailto:contact@gossip.fr" class="text-decoration-none text-dark">
+                    📬 contact@gossip.fr
+                </a>
+            </p>
+        </div>
+        <div class="text-center mt-3">
+            <%= link_to "Retour à l'accueil", root_path, class: "btn btn-outline-primary btn-sm" %>
+        </div>
+
+    </div>
+</div>
